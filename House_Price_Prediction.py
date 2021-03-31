@@ -407,15 +407,6 @@ lgbm_tuned = LGBMRegressor(**lgbm_cv_model.best_params_).fit(X_train, y_train)
 y_pred = lgbm_tuned.predict(X_val)
 np.sqrt(mean_squared_error(np.log1p(y_val), np.log1p(y_pred)))
 
-
-new_predict = pd.DataFrame()
-new_predict["Id"] = test["Id"].astype(int)
-y_pred_sub = lgbm_tuned.predict(test.drop("Id", axis=1))
-new_predict['SalePrice'] = y_pred_sub
-
-new_predict.to_csv('atolye.csv', index=False)
-
-
 # FEATURE IMPORTANCE
 def plot_importance(model, X, num=len(X)):
     feature_imp = pd.DataFrame({'Value': model.feature_importances_, 'Feature': X.columns})
